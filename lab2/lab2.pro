@@ -26,13 +26,18 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    naturalNumberAlgorithms/naturalui.cpp \
+    naturalNumberAlgorithms/naturalalgorithms.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    naturalNumberAlgorithms/naturalui.h \
+    naturalNumberAlgorithms/naturalalgorithms.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    naturalNumberAlgorithms/naturalui.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
