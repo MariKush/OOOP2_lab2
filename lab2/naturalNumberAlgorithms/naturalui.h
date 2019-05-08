@@ -8,7 +8,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QListWidget>
-#include <QTableView>
+#include <QTableWidget>
 #include "naturalalgorithms.h"
 
 namespace Ui {
@@ -25,7 +25,7 @@ public:
 
 private:
     Ui::NaturalUI *ui;
-    NaturalAlgorithms algorithms;
+    NaturalAlgorithms *algorithms;
 
     QSpinBox *spin1=Q_NULLPTR, *spin2=Q_NULLPTR;
     QLabel *label1=Q_NULLPTR, *label2=Q_NULLPTR, *answer_lbl=Q_NULLPTR;
@@ -33,6 +33,7 @@ private:
     QVBoxLayout number1, number2;
     QPushButton *enter=Q_NULLPTR;
     QListWidget *listWidget=Q_NULLPTR;
+    QTableWidget *tableWidget=Q_NULLPTR;
 
     void set_NSD_ui();
     void set_NSK_ui();
@@ -45,7 +46,8 @@ private:
     void add_2_block();
     void add_enter();
     void add_listWidget();
-    void add_label();
+    void add_tableWidget();
+    void add_label_ans();
     void clear_ui();
     void clear_el(QObject *);
     void add_label_in_return_listWidget();
@@ -57,7 +59,7 @@ private slots:
     void calculate_NSD();
     void calculate_NSK();
     void calculate_Eratosfen();
-    void calculate_Syndamar();
+    void calculate_Syndaram();
     void calculate_simple_factors();
     void calculate_perfect_number();
 

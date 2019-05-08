@@ -11,6 +11,7 @@ NaturalUI::NaturalUI(QWidget *parent) :
     ui(new Ui::NaturalUI)
 {
     ui->setupUi(this);
+    algorithms=NaturalAlgorithms::getInstance();
     connect(ui->algorithms_ComboBox, SIGNAL(currentIndexChanged(QString)),this, SLOT(changeUI(QString)));
 
     hLayout_numbers.addLayout(&number1);
