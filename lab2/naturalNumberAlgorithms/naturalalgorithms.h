@@ -2,6 +2,7 @@
 #define NATURALALGORITHMS_H
 
 #include <QObject>
+#include <QPair>
 
 class NaturalAlgorithms : public QObject
 {
@@ -13,6 +14,10 @@ public:
          }
          return _instance;
         }
+    QVector<int> Eratosfen(int N) const;
+    QVector<int> Sundaram(int N) const;
+    QVector<QPair<int, int>> simple_factors(int N) const;
+    QPair<QPair<int,int>, QVector<QPair<int,int>>> nsk_nsd(int i, int j) const;
 
 signals:
 

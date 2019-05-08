@@ -18,6 +18,11 @@
     <widget class="QComboBox" name="algorithms_ComboBox">
      <item>
       <property name="text">
+       <string>НСК &amp; НСД</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Решето Ератосфена</string>
       </property>
      </item>
@@ -34,16 +39,6 @@
      <item>
       <property name="text">
        <string>Решето Сундарама</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Найменший спільний дільник</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Найбільшe спільне кратне</string>
       </property>
      </item>
     </widget>

@@ -28,15 +28,14 @@ private:
     NaturalAlgorithms *algorithms;
 
     QSpinBox *spin1=Q_NULLPTR, *spin2=Q_NULLPTR;
-    QLabel *label1=Q_NULLPTR, *label2=Q_NULLPTR, *answer_lbl=Q_NULLPTR;
+    QLabel *label1=Q_NULLPTR, *label2=Q_NULLPTR, *answer_lbl1=Q_NULLPTR,*answer_lbl2=Q_NULLPTR;
     QHBoxLayout hLayout_numbers;
     QVBoxLayout number1, number2;
     QPushButton *enter=Q_NULLPTR;
     QListWidget *listWidget=Q_NULLPTR;
     QTableWidget *tableWidget=Q_NULLPTR;
 
-    void set_NSD_ui();
-    void set_NSK_ui();
+    void set_NSK_NSD_ui();
     void set_Eratosfen_ui();
     void set_Sundaram_ui();
     void set_simple_factors_ui();
@@ -47,7 +46,8 @@ private:
     void add_enter();
     void add_listWidget();
     void add_tableWidget();
-    void add_label_ans();
+    void add_label1_ans();
+    void add_label2_ans();
     void clear_ui();
     void clear_el(QObject *);
     void add_label_in_return_listWidget();
@@ -56,8 +56,7 @@ private:
 private slots:
     void changeUI(QString);
 
-    void calculate_NSD();
-    void calculate_NSK();
+    void calculate_NSK_NSD();
     void calculate_Eratosfen();
     void calculate_Syndaram();
     void calculate_simple_factors();

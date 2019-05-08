@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QTableWidgetItem>
+
 NaturalUI::NaturalUI(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NaturalUI)
@@ -30,17 +32,15 @@ NaturalUI::~NaturalUI()
 void NaturalUI::changeUI(QString algorithmName)
 {
     clear_ui();
-    if(algorithmName=="Найменший спільний дільник")
-        set_NSD_ui();
-    if (algorithmName=="Найбільшe спільне кратне")
-        set_NSK_ui();
-    if (algorithmName=="Решето Ератосфена")
+    if (algorithmName=="НСК & НСД")
+        set_NSK_NSD_ui();
+    else if (algorithmName=="Решето Ератосфена")
         set_Eratosfen_ui();
-    if (algorithmName=="Решето Сундарама")
+    else if (algorithmName=="Решето Сундарама")
         set_Sundaram_ui();
-    if (algorithmName=="Розклад на прості множники")
+    else if (algorithmName=="Розклад на прості множники")
         set_simple_factors_ui();
-    if (algorithmName=="Знаходження досконалих чисел")
+    else if (algorithmName=="Знаходження досконалих чисел")
         set_perfect_numbers_ui();
 
 
@@ -55,7 +55,8 @@ void NaturalUI::clear_ui()
     clear_el(spin2); spin2=Q_NULLPTR;
     clear_el(label1); label1=Q_NULLPTR;
     clear_el(label2); label2=Q_NULLPTR;
-    clear_el(answer_lbl); answer_lbl=Q_NULLPTR;
+    clear_el(answer_lbl1); answer_lbl1=Q_NULLPTR;
+    clear_el(answer_lbl2); answer_lbl2=Q_NULLPTR;
     clear_el(listWidget); listWidget=Q_NULLPTR;
     clear_el(tableWidget); tableWidget=Q_NULLPTR;
 
@@ -73,16 +74,16 @@ void NaturalUI::clear_el(QObject *el)
 void NaturalUI::add_label_in_return_listWidget()
 {
     clear_el(listWidget); listWidget=Q_NULLPTR;
-    clear_el(answer_lbl); answer_lbl=Q_NULLPTR;
-    add_label_ans();
-    answer_lbl->setText("invalid");
+    clear_el(answer_lbl1); answer_lbl1=Q_NULLPTR;
+    add_label1_ans();
+    answer_lbl1->setText("invalid");
 
 }
 
 void NaturalUI::add_listWidget_in_return_label()
 {
     clear_el(listWidget); listWidget=Q_NULLPTR;
-    clear_el(answer_lbl); answer_lbl=Q_NULLPTR;
+    clear_el(answer_lbl1); answer_lbl1=Q_NULLPTR;
     add_listWidget();
 }
 
@@ -118,48 +119,39 @@ void NaturalUI::add_listWidget()
 void NaturalUI::add_tableWidget()
 {
     clear_el(tableWidget); tableWidget=Q_NULLPTR;
-    tableWidget=new QTableWidget(0,2);
+    tableWidget=new QTableWidget(0,2, this);
+    tableWidget->setEditTriggers(QTableWidget::NoEditTriggers);
     ui->verticalLayout->addWidget(tableWidget);
 }
 
-void NaturalUI::add_label_ans()
+void NaturalUI::add_label1_ans()
 {
-    clear_el(answer_lbl); answer_lbl=Q_NULLPTR;
-    answer_lbl=new QLabel;
-    ui->verticalLayout->addWidget(answer_lbl);
+    clear_el(answer_lbl1); answer_lbl1=Q_NULLPTR;
+    answer_lbl1=new QLabel;
+    ui->verticalLayout->addWidget(answer_lbl1);
+}
+
+void NaturalUI::add_label2_ans()
+{
+    clear_el(answer_lbl2); answer_lbl2=Q_NULLPTR;
+    answer_lbl2=new QLabel;
+    ui->verticalLayout->addWidget(answer_lbl2);
 }
 
 
-
-void NaturalUI::set_NSD_ui()
+void NaturalUI::set_NSK_NSD_ui()
 {
     add_1_block();
     add_2_block();
     add_enter();
-    add_label_ans();
-    //ui->verticalLayout->addLayout(&hLayout_numbers);
 
-
-    connect(enter, SIGNAL(clicked()), this, SLOT(calculate_NSD()));
-}
-
-void NaturalUI::set_NSK_ui()
-{
-    add_1_block();
-    add_2_block();
-    add_enter();
-    add_label_ans();
-    //ui->verticalLayout->addLayout(&hLayout_numbers);
-
-    connect(enter, SIGNAL(clicked()), this, SLOT(calculate_NSK()));
+    connect(enter, SIGNAL(clicked()), this, SLOT(calculate_NSK_NSD()));
 }
 
 void NaturalUI::set_Eratosfen_ui()
 {
-    add_1_block();label1->setText("до якого числа крч");
+    add_1_block();label1->setText("до якого числа крч"); spin1->setMinimum(2);
     add_enter();
-    add_listWidget();
-    //ui->verticalLayout->addLayout(&hLayout_numbers);
 
 
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Eratosfen()));
@@ -167,10 +159,8 @@ void NaturalUI::set_Eratosfen_ui()
 
 void NaturalUI::set_Sundaram_ui()
 {
-    add_1_block();label1->setText("від якого числа крч");
-    add_2_block();label2->setText("до якого числа крч");
+    add_1_block();label1->setText("до 2*N+1 крч");
     add_enter();
-    add_listWidget();
 
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Syndaram()));
 }
@@ -194,29 +184,33 @@ void NaturalUI::set_perfect_numbers_ui()
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_perfect_number()));
 }
 
-void NaturalUI::calculate_NSD()
+//-----------realization--------------
+
+void NaturalUI::calculate_NSK_NSD()
 {
     qDebug()<<spin1->value()<<spin2->value();
+    add_tableWidget(); tableWidget->setHorizontalHeaderLabels(QStringList{"a","b"});
+    add_label1_ans();
+    add_label2_ans();
 
-    //i get int
 
-    answer_lbl->setText("Найменший спільний дільник: "+QString::number(1));
-}
+    QPair<QPair<int,int>, QVector<QPair<int,int>>> ns=algorithms->nsk_nsd(spin1->value(), spin2->value());
+    int size=ns.second.size();
+    tableWidget->setRowCount(size);
 
-void NaturalUI::calculate_NSK()
-{
-    qDebug()<<spin1->value()<<spin2->value();
+    for (int i=0;i<size;i++){
+        tableWidget->setItem(i,0, new QTableWidgetItem(QString::number(ns.second[i].first)));
+        tableWidget->setItem(i,1, new QTableWidgetItem(QString::number(ns.second[i].second)));
+    }
 
-    //i get int
-
-    answer_lbl->setText("Найбільше спільне кратне: "+QString::number(1));
+    answer_lbl1->setText("NSD: "+QString::number(ns.first.first));
+    answer_lbl2->setText("NSK: "+QString::number(ns.first.second));
 }
 
 void NaturalUI::calculate_Eratosfen()
 {
-    qDebug()<<spin1->value();
     add_listWidget_in_return_label();
-    QVector<int> arr;//todo for
+    QVector<int> arr=algorithms->Eratosfen(spin1->value());
 
     int size=arr.size();
     for (int i=0;i<size;i++)
@@ -227,9 +221,8 @@ void NaturalUI::calculate_Eratosfen()
 
 void NaturalUI::calculate_Syndaram()
 {
-    qDebug()<<spin1->value()<<spin2->value();
     add_listWidget_in_return_label();
-    QVector<int> arr;//todo for
+    QVector<int> arr=algorithms->Sundaram(spin1->value());
 
     int size=arr.size();
     for (int i=0;i<size;i++)
@@ -242,13 +235,18 @@ void NaturalUI::calculate_simple_factors()
 {
     qDebug()<<spin1->value();
     add_tableWidget();
-    QVector<QPair<int,int>> arr;//todo for
+
+    QVector<QPair<int,int>> arr=algorithms->simple_factors(spin1->value());
 
     int size=arr.size();
+    qDebug()<<size;
     tableWidget->setRowCount(size);
+
+    qDebug()<<tableWidget->columnCount()<<tableWidget->rowCount();
+
     for (int i=0;i<size;i++){
-        tableWidget->item(i,0)->setText(QString::number(arr[i].first));
-        tableWidget->item(i,1)->setText(QString::number(arr[i].second));
+        tableWidget->setItem(i,0, new QTableWidgetItem(QString::number(arr[i].first)));
+        tableWidget->setItem(i,1, new QTableWidgetItem(QString::number(arr[i].second)));
     }
     if (size==0)
     {
