@@ -18,7 +18,22 @@
     <widget class="QComboBox" name="algorithms_ComboBox">
      <item>
       <property name="text">
-       <string>Решето ератосфена</string>
+       <string>Решето Ератосфена</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Знаходження досконалих чисел</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Розклад на прості множники</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Решето Сундарама</string>
       </property>
      </item>
      <item>

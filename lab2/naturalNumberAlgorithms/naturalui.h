@@ -7,6 +7,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QListWidget>
+#include <QTableView>
 #include "naturalalgorithms.h"
 
 namespace Ui {
@@ -30,13 +32,24 @@ private:
     QHBoxLayout hLayout_numbers;
     QVBoxLayout number1, number2;
     QPushButton *enter=Q_NULLPTR;
+    QListWidget *listWidget=Q_NULLPTR;
 
     void set_NSD_ui();
     void set_NSK_ui();
     void set_Eratosfen_ui();
+    void set_Sundaram_ui();
+    void set_simple_factors_ui();
+    void set_perfect_numbers_ui();
 
+    void add_1_block();
+    void add_2_block();
+    void add_enter();
+    void add_listWidget();
+    void add_label();
     void clear_ui();
     void clear_el(QObject *);
+    void add_label_in_return_listWidget();
+    void add_listWidget_in_return_label();
 
 private slots:
     void changeUI(QString);
@@ -44,6 +57,10 @@ private slots:
     void calculate_NSD();
     void calculate_NSK();
     void calculate_Eratosfen();
+    void calculate_Syndamar();
+    void calculate_simple_factors();
+    void calculate_perfect_number();
+
 };
 
 #endif // NATURALUI_H
