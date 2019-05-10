@@ -11,6 +11,7 @@
 #include <QTableWidget>
 #include "naturalalgorithms.h"
 
+
 namespace Ui {
 class NaturalUI;
 }
@@ -38,7 +39,7 @@ private:
     void set_NSK_NSD_ui();
     void set_Eratosfen_ui();
     void set_Sundaram_ui();
-    void set_simple_factors_ui();
+    void set_Simple_factors_ui();
     void set_Copercard_ui();
 
     void add_1_block();
@@ -56,13 +57,20 @@ private:
     void closeEvent(QCloseEvent*)override;
     bool open_old();
 
+    FRIEND_TEST(naturalUI, EratosfenUI);
+    FRIEND_TEST(naturalUI, SundaramUI);
+    FRIEND_TEST(naturalUI, NSD_and_NSKUI);
+    FRIEND_TEST(naturalUI, CopercardUI);
+    FRIEND_TEST(naturalUI, Simple_factorsUI);
+
+
 private slots:
     void changeUI(QString);
 
     void calculate_NSK_NSD();
     void calculate_Eratosfen();
     void calculate_Syndaram();
-    void calculate_simple_factors();
+    void calculate_Simple_factors();
     void calculate_Copercard();
 
 };

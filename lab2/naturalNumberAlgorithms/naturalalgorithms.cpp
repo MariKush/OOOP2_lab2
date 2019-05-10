@@ -11,7 +11,7 @@ NaturalAlgorithms::NaturalAlgorithms(QObject *parent) : QObject(parent)
 
 }
 
-QPair<QPair<int, int>, QVector<QPair<int, int> > > NaturalAlgorithms::nsk_nsd(int i, int j) const
+QPair<QPair<int, int>, QVector<QPair<int, int>>> NaturalAlgorithms::nsk_nsd(int i, int j) const
 {
     QPair<QPair<int, int>, QVector<QPair<int, int>>> ns;
     int a=qMax(i,j), b=qMin(i,j);
@@ -43,7 +43,6 @@ QVector<QString> NaturalAlgorithms::Copercard(int value)
 
         arr.push_back("K("+str+")=" +maxStr+"-"+minStr+"="+QString::number(newValue));
         value=newValue;
-        qDebug()<<value<<maxStr<<minStr<<newValue;
 
     }while (maxStr!="7641"&&minStr!="1467");
 

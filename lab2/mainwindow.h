@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <gtest/gtest.h>
 
+#include "naturalNumberAlgorithms/naturalui.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +23,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    NaturalUI * natural;
+
+    FRIEND_TEST(mainwindow, natural);
 };
 
 #endif // MAINWINDOW_H

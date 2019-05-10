@@ -83,7 +83,7 @@ void NaturalUI::changeUI(QString algorithmName)
     else if (algorithmName=="Решето Сундарама")
         set_Sundaram_ui();
     else if (algorithmName=="Розклад на прості множники")
-        set_simple_factors_ui();
+        set_Simple_factors_ui();
     else if (algorithmName=="Перетворення Коперкарда")
         set_Copercard_ui();
     else {
@@ -212,12 +212,12 @@ void NaturalUI::set_Sundaram_ui()
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Syndaram()));
 }
 
-void NaturalUI::set_simple_factors_ui()
+void NaturalUI::set_Simple_factors_ui()
 {
      add_1_block(); spin1->setMinimum(2);
      add_enter();
 
-     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_simple_factors()));
+     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Simple_factors()));
 }
 
 void NaturalUI::set_Copercard_ui()
@@ -233,7 +233,6 @@ void NaturalUI::set_Copercard_ui()
 
 void NaturalUI::calculate_NSK_NSD()
 {
-    qDebug()<<spin1->value()<<spin2->value();
     add_tableWidget(); tableWidget->setHorizontalHeaderLabels(QStringList{"a","b"});
     add_label1_ans();
     add_label2_ans();
@@ -276,18 +275,16 @@ void NaturalUI::calculate_Syndaram()
         add_label_in_return_listWidget();
 }
 
-void NaturalUI::calculate_simple_factors()
+void NaturalUI::calculate_Simple_factors()
 {
-    qDebug()<<spin1->value();
     add_tableWidget();
 
     QVector<QPair<int,int>> arr=algorithms->simple_factors(spin1->value());
 
     int size=arr.size();
-    qDebug()<<size;
+
     tableWidget->setRowCount(size);
 
-    qDebug()<<tableWidget->columnCount()<<tableWidget->rowCount();
 
     for (int i=0;i<size;i++){
         tableWidget->setItem(i,0, new QTableWidgetItem(QString::number(arr[i].first)));

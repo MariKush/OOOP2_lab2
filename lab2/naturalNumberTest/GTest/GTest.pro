@@ -1,18 +1,19 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2019-05-04T18:03:47
-#
-#-------------------------------------------------
-
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = lab2
-TEMPLATE = app
+CONFIG+=console c++14 no_batch
+
+
+
+INCLUDEPATH+="../../"
+INCLUDEPATH+="googletest"
+INCLUDEPATH+="googletest/include"
+INCLUDEPATH+="googlemock"
+INCLUDEPATH+="googlemock/include"
 
 # The following define makes your compiler emit warnings if you use
-# any feature of Qt which has been marked as deprecated (the exact warnings
+# any feature of Qt which as been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -22,29 +23,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++11
-
-INCLUDEPATH +="naturalNumberTest/GTest/googletest/include"
-INCLUDEPATH +="naturalNumberTest/GTest/googlemock/include"
-INCLUDEPATH +="naturalNumberTest/GTest/googletest"
-INCLUDEPATH +="naturalNumberTest/GTest/googlemock"
-
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    naturalNumberAlgorithms/naturalui.cpp \
-    naturalNumberAlgorithms/naturalalgorithms.cpp
+    googletest/src/gtest-all.cc \
+    googlemock/src/gmock-all.cc \
+    ../../main.cpp \
+    ../../mainwindow.cpp \
+    ../../naturalNumberAlgorithms/naturalalgorithms.cpp \
+    ../../naturalNumberAlgorithms/naturalui.cpp
 
-HEADERS += \
-        mainwindow.h \
-    naturalNumberAlgorithms/naturalui.h \
-    naturalNumberAlgorithms/naturalalgorithms.h
-
-FORMS += \
-        mainwindow.ui \
-    naturalNumberAlgorithms/naturalui.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+FORMS += \
+    ../../mainwindow.ui \
+    ../../naturalNumberAlgorithms/naturalui.ui
+
+HEADERS += \
+    ../../mainwindow.h \
+    ../../naturalNumberAlgorithms/naturalalgorithms.h \
+    ../../naturalNumberAlgorithms/naturalui.h

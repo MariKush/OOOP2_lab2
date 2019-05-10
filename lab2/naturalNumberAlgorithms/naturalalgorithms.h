@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QPair>
 
+#include <gtest/gtest.h>
+
+
 class NaturalAlgorithms : public QObject
 {
     Q_OBJECT
