@@ -21,7 +21,7 @@ class NaturalUI : public QDialog
 
 public:
     explicit NaturalUI(QWidget *parent = nullptr);
-    ~NaturalUI();
+    ~NaturalUI()override;
 
 private:
     Ui::NaturalUI *ui;
@@ -39,7 +39,7 @@ private:
     void set_Eratosfen_ui();
     void set_Sundaram_ui();
     void set_simple_factors_ui();
-    void set_perfect_numbers_ui();
+    void set_Copercard_ui();
 
     void add_1_block();
     void add_2_block();
@@ -53,6 +53,9 @@ private:
     void add_label_in_return_listWidget();
     void add_listWidget_in_return_label();
 
+    void closeEvent(QCloseEvent*)override;
+    bool open_old();
+
 private slots:
     void changeUI(QString);
 
@@ -60,7 +63,7 @@ private slots:
     void calculate_Eratosfen();
     void calculate_Syndaram();
     void calculate_simple_factors();
-    void calculate_perfect_number();
+    void calculate_Copercard();
 
 };
 

@@ -1,5 +1,7 @@
 #include "naturalalgorithms.h"
 #include <QVector>
+#include <QtAlgorithms>
+#include <QDebug>
 
 NaturalAlgorithms* NaturalAlgorithms::_instance = Q_NULLPTR;
 
@@ -22,6 +24,31 @@ QPair<QPair<int, int>, QVector<QPair<int, int> > > NaturalAlgorithms::nsk_nsd(in
     ns.first.first=a;
     ns.first.second=i*j/a;
     return ns;
+}
+
+QVector<QString> NaturalAlgorithms::Copercard(int value)
+{
+    QVector<QString> arr;
+    QString str;
+
+    QString minStr(str), maxStr(str);
+    do{
+        str=QString::number(value);
+        while (str.size()<4) str="0"+str;
+        minStr=str;maxStr=str;
+        std::sort(minStr.begin(), minStr.end());
+        for (int i=0;i<4;i++)
+            maxStr[i]=minStr[3-i];
+        int newValue=maxStr.toInt()-minStr.toInt();
+
+        arr.push_back("K("+str+")=" +maxStr+"-"+minStr+"="+QString::number(newValue));
+        value=newValue;
+        qDebug()<<value<<maxStr<<minStr<<newValue;
+
+    }while (maxStr!="7641"&&minStr!="1467");
+
+
+    return arr;
 }
 
 QVector<int> NaturalAlgorithms::Eratosfen(int N) const

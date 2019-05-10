@@ -18,6 +18,7 @@ public:
     QVector<int> Sundaram(int N) const;
     QVector<QPair<int, int>> simple_factors(int N) const;
     QPair<QPair<int,int>, QVector<QPair<int,int>>> nsk_nsd(int i, int j) const;
+    QVector<QString> Copercard(int i);
 
 signals:
 
@@ -28,6 +29,6 @@ private:
     NaturalAlgorithms( const NaturalAlgorithms& );
     NaturalAlgorithms& operator=( NaturalAlgorithms& );
     static NaturalAlgorithms* _instance;
-};
 
+};
 #endif // NATURALALGORITHMS_H

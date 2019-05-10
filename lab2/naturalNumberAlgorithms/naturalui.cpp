@@ -1,5 +1,6 @@
 #include "naturalui.h"
 #include "ui_naturalui.h"
+#include "mainwindow.h"
 #include <QDebug>
 #include <QVector>
 #include <QSpinBox>
@@ -7,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTableWidgetItem>
+#include <QCloseEvent>
 
 NaturalUI::NaturalUI(QWidget *parent) :
     QDialog(parent),
@@ -14,13 +16,39 @@ NaturalUI::NaturalUI(QWidget *parent) :
 {
     ui->setupUi(this);
     algorithms=NaturalAlgorithms::getInstance();
-    connect(ui->algorithms_ComboBox, SIGNAL(currentIndexChanged(QString)),this, SLOT(changeUI(QString)));
+
 
     hLayout_numbers.addLayout(&number1);
     hLayout_numbers.addLayout(&number2);
 
     ui->verticalLayout->addLayout(&hLayout_numbers);
-    changeUI(ui->algorithms_ComboBox->currentText());
+
+    if (!open_old())
+        changeUI(ui->algorithms_ComboBox->currentText());
+
+    connect(ui->algorithms_ComboBox, SIGNAL(currentIndexChanged(QString)),this, SLOT(changeUI(QString)));
+}
+
+bool NaturalUI::open_old()
+{
+    QFile f1("filename.txt");
+    if (!f1.open(QFile::ReadOnly)) return false;
+    QTextStream str(&f1);
+    QString algname=str.readLine();
+
+    ui->algorithms_ComboBox->setCurrentText(algname);
+    changeUI(algname);
+    int value;
+    str>>value;
+    spin1->setValue(value);
+    if (ui->algorithms_ComboBox->currentText()=="НСК & НСД"){
+        str>>value;
+        spin2->setValue(value);
+    }
+    enter->click();
+    f1.close();
+
+    return true;
 }
 
 NaturalUI::~NaturalUI()
@@ -28,6 +56,22 @@ NaturalUI::~NaturalUI()
     delete ui;
 }
 
+void NaturalUI::closeEvent(QCloseEvent *)
+{
+    QFile f1("filename.txt");
+    f1.open(QFile::WriteOnly|QFile::Truncate);
+    QTextStream str(&f1);
+    str<<ui->algorithms_ComboBox->currentText()<<endl;
+    str<<spin1->value();
+    if (ui->algorithms_ComboBox->currentText()=="НСК & НСД"){
+        str<<' '<<spin2->value();
+    }
+    f1.close();
+
+    MainWindow *main=new MainWindow();
+    main->show();
+
+}
 
 void NaturalUI::changeUI(QString algorithmName)
 {
@@ -40,9 +84,12 @@ void NaturalUI::changeUI(QString algorithmName)
         set_Sundaram_ui();
     else if (algorithmName=="Розклад на прості множники")
         set_simple_factors_ui();
-    else if (algorithmName=="Знаходження досконалих чисел")
-        set_perfect_numbers_ui();
-
+    else if (algorithmName=="Перетворення Коперкарда")
+        set_Copercard_ui();
+    else {
+        ui->algorithms_ComboBox->setCurrentText("НСК & НСД");
+        set_NSK_NSD_ui();
+    }
 
     enter->click();
 
@@ -173,15 +220,13 @@ void NaturalUI::set_simple_factors_ui()
      connect(enter, SIGNAL(clicked()), this, SLOT(calculate_simple_factors()));
 }
 
-void NaturalUI::set_perfect_numbers_ui()
+void NaturalUI::set_Copercard_ui()
 {
-    add_1_block();label1->setText("від якого числа крч");
-    add_2_block();label2->setText("до якого числа крч");
+    add_1_block();label1->setText("число");spin1->setMinimum(1000); spin1->setMaximum(9998);
     add_enter();
-    add_listWidget();
 
 
-    connect(enter, SIGNAL(clicked()), this, SLOT(calculate_perfect_number()));
+    connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Copercard()));
 }
 
 //-----------realization--------------
@@ -255,15 +300,20 @@ void NaturalUI::calculate_simple_factors()
 
 }
 
-void NaturalUI::calculate_perfect_number()
+void NaturalUI::calculate_Copercard()
 {
-    qDebug()<<spin1->value()<<spin2->value();
+    QString number=QString::number(spin1->value());
+    if (number.size()!=4||(number[0]==number[1]&&number[1]==number[2]&&number[2]==number[3])){
+        add_label_in_return_listWidget();
+        answer_lbl1->setText("однаокві цифри у числі");
+        return;
+    }
     add_listWidget_in_return_label();
-    QVector<int> arr;//todo for
+    QVector<QString> arr=algorithms->Copercard(spin1->value());
 
     int size=arr.size();
     for (int i=0;i<size;i++)
-        listWidget->addItem(QString::number(arr[i]));
+        listWidget->addItem(arr[i]);
     if (size==0)
         add_label_in_return_listWidget();
 }
