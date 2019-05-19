@@ -1,16 +1,39 @@
+/*
+    K-28
+    naturalalgorithms.cpp
+    Purpose: implementation of class NaturalUI functions
+    (for algorithms by natural numbers (patern Singleton))
+    @author Mariia Kushnirenko
+    @version 10/05/19
+*/
+
+
 #include "naturalalgorithms.h"
 #include <QVector>
 #include <QtAlgorithms>
 #include <QDebug>
 
+//for realization patern Singleton
 NaturalAlgorithms* NaturalAlgorithms::_instance = Q_NULLPTR;
 
 
+/*
+    Designer class NaturalAlgorithms
+    @param QObject *parent
+    @return -
+*/
 NaturalAlgorithms::NaturalAlgorithms(QObject *parent) : QObject(parent)
 {
 
 }
 
+
+/*
+    The algorithm for calculating the smallest common multiple and largest common divisor
+    @param int i, int j - two numbers
+    @return QPair<int, int> - nsd and nsk;
+            QVector<QPair<int, int>> - to demonstrate the steps of the Euclidean algorithm
+*/
 QPair<QPair<int, int>, QVector<QPair<int, int>>> NaturalAlgorithms::nsk_nsd(int i, int j) const
 {
     QPair<QPair<int, int>, QVector<QPair<int, int>>> ns;
@@ -26,6 +49,13 @@ QPair<QPair<int, int>, QVector<QPair<int, int>>> NaturalAlgorithms::nsk_nsd(int 
     return ns;
 }
 
+
+/*
+    Implementation of the algorithm of the sequence of transformations
+    of the Capercard for a four-digit number
+    @param int value - number
+    @return QVector<QString> - the sequence of all transformations
+*/
 QVector<QString> NaturalAlgorithms::Copercard(int value)
 {
     QVector<QString> arr;
@@ -46,10 +76,15 @@ QVector<QString> NaturalAlgorithms::Copercard(int value)
 
     }while (maxStr!="7641"&&minStr!="1467");
 
-
     return arr;
 }
 
+
+/*
+    Realization of the algorithm of Eratosphen - search of all prime numbers to the given one
+    @param int N - number to which we will look for all prime numbers
+    @return QVector<int> - vector of all primes to a given value N
+*/
 QVector<int> NaturalAlgorithms::Eratosfen(int N) const
 {
     QVector<bool> B;
@@ -74,6 +109,12 @@ QVector<int> NaturalAlgorithms::Eratosfen(int N) const
 }
 
 
+/*
+    Realization of the algorithm of Sundaram -
+    simple deterministic algorithm for finding all the prime numbers up to a specified integer
+    @param int N - number
+    @return QVector<int> - vector of all primes to 2*N+1
+*/
 QVector<int> NaturalAlgorithms::Sundaram(int N) const
 {
     QVector<bool> A;
@@ -96,6 +137,13 @@ QVector<int> NaturalAlgorithms::Sundaram(int N) const
     return arr;
 }
 
+
+/*
+    Realization of the algorithm of the decomposition of the number into simple divisors
+    @param int N - number
+    @return QVector<QPair<int,int>> - vector pair (divide and divider)
+            formed during the operation of the algorithm
+*/
 QVector<QPair<int,int>> NaturalAlgorithms::simple_factors(int N) const
 {
     QVector<QPair<int,int>> arr;

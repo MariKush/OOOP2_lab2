@@ -1,6 +1,15 @@
 #ifndef NATURALALGORITHMS_H
 #define NATURALALGORITHMS_H
 
+/*
+    K-28
+    naturalalgorithms.h
+    Purpose: idescription of class NaturalAlgorithms functions
+    (for algorithms by natural numbers (patern Singleton))
+    @author Mariia Kushnirenko
+    @version 10/05/19
+*/
+
 #include <QObject>
 #include <QPair>
 
