@@ -1,6 +1,16 @@
 #ifndef NATURALUI_H
 #define NATURALUI_H
 
+/*
+    K-28
+    naturalal.h
+    Purpose: idescription of class NaturalUI functions
+    (for user interface for algorithms by natural numbers)
+    @author Mariia Kushnirenko
+    @version 10/05/19
+*/
+
+
 #include <QDialog>
 #include <QSpinBox>
 #include <QLabel>

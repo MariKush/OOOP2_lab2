@@ -1,3 +1,13 @@
+/*
+    K-28
+    naturalal.cpp
+    Purpose: implementation of class NaturalUI functions
+    (for user interface for algorithms by natural numbers)
+    @author Mariia Kushnirenko
+    @version 10/05/19
+*/
+
+
 #include "naturalui.h"
 #include "ui_naturalui.h"
 #include "mainwindow.h"
@@ -10,13 +20,18 @@
 #include <QTableWidgetItem>
 #include <QCloseEvent>
 
+
+/*
+    Designer class NaturalUI
+    @param QWidget *parent
+    @return -
+*/
 NaturalUI::NaturalUI(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NaturalUI)
 {
     ui->setupUi(this);
     algorithms=NaturalAlgorithms::getInstance();
-
 
     hLayout_numbers.addLayout(&number1);
     hLayout_numbers.addLayout(&number2);
@@ -29,6 +44,12 @@ NaturalUI::NaturalUI(QWidget *parent) :
     connect(ui->algorithms_ComboBox, SIGNAL(currentIndexChanged(QString)),this, SLOT(changeUI(QString)));
 }
 
+
+/*
+    To open a program with data from a previous session
+    @param -
+    @return bool true - if all success
+*/
 bool NaturalUI::open_old()
 {
     QFile f1("filename.txt");
@@ -51,11 +72,23 @@ bool NaturalUI::open_old()
     return true;
 }
 
+
+/*
+    Destructor class NaturalUI
+    @param -
+    @return -
+*/
 NaturalUI::~NaturalUI()
 {
     delete ui;
 }
 
+
+/*
+    When closing the program, the results of the work are recorded in the file
+    @param QCloseEvent *
+    @return -
+*/
 void NaturalUI::closeEvent(QCloseEvent *)
 {
     QFile f1("filename.txt");
@@ -70,9 +103,14 @@ void NaturalUI::closeEvent(QCloseEvent *)
 
     MainWindow *main=new MainWindow();
     main->show();
-
 }
 
+
+/*
+    Change the user interface, depending on which algorithm we work with
+    @param QString algorithmName
+    @return -
+*/
 void NaturalUI::changeUI(QString algorithmName)
 {
     clear_ui();
@@ -96,6 +134,11 @@ void NaturalUI::changeUI(QString algorithmName)
 }
 
 
+/*
+    Сlearing the user interface
+    @param -
+    @return -
+*/
 void NaturalUI::clear_ui()
 {
     clear_el(spin1); spin1=Q_NULLPTR;
@@ -110,6 +153,12 @@ void NaturalUI::clear_ui()
     if (enter!=Q_NULLPTR){ enter->disconnect(); delete enter; enter=Q_NULLPTR;}
 }
 
+
+/*
+    Delete an item
+    @param -
+    @return -
+*/
 void NaturalUI::clear_el(QObject *el)
 {
     if (Q_NULLPTR==el)return;
@@ -118,15 +167,26 @@ void NaturalUI::clear_el(QObject *el)
     el=Q_NULLPTR;
 }
 
+
+/*
+    Add answer in listWidget
+    @param -
+    @return -
+*/
 void NaturalUI::add_label_in_return_listWidget()
 {
     clear_el(listWidget); listWidget=Q_NULLPTR;
     clear_el(answer_lbl1); answer_lbl1=Q_NULLPTR;
     add_label1_ans();
     answer_lbl1->setText("invalid");
-
 }
 
+
+/*
+    Add listWidget
+    @param -
+    @return -
+*/
 void NaturalUI::add_listWidget_in_return_label()
 {
     clear_el(listWidget); listWidget=Q_NULLPTR;
@@ -135,6 +195,11 @@ void NaturalUI::add_listWidget_in_return_label()
 }
 
 
+/*
+    Add block for number 1
+    @param -
+    @return -
+*/
 void NaturalUI::add_1_block()
 {
     spin1=new QSpinBox; spin1->setMinimum(1); spin1->setValue(21);
@@ -143,6 +208,12 @@ void NaturalUI::add_1_block()
 
 }
 
+
+/*
+    Add block for number 2
+    @param -
+    @return -
+*/
 void NaturalUI::add_2_block()
 {
     spin2=new QSpinBox; spin2->setMinimum(1); spin2->setValue(49);
@@ -150,12 +221,24 @@ void NaturalUI::add_2_block()
     number2.addWidget(label2); number2.addWidget(spin2);
 }
 
+
+/*
+    Add enter button
+    @param -
+    @return -
+*/
 void NaturalUI::add_enter()
 {
     enter=new QPushButton("enter");
     hLayout_numbers.addWidget(enter);
 }
 
+
+/*
+    Create new and add listWidget
+    @param -
+    @return -
+*/
 void NaturalUI::add_listWidget()
 {
     clear_el(listWidget); listWidget=Q_NULLPTR;
@@ -163,6 +246,12 @@ void NaturalUI::add_listWidget()
     ui->verticalLayout->addWidget(listWidget);
 }
 
+
+/*
+    Create new and add tableWidget
+    @param -
+    @return -
+*/
 void NaturalUI::add_tableWidget()
 {
     clear_el(tableWidget); tableWidget=Q_NULLPTR;
@@ -171,6 +260,12 @@ void NaturalUI::add_tableWidget()
     ui->verticalLayout->addWidget(tableWidget);
 }
 
+
+/*
+    Create new and add label for answer1
+    @param -
+    @return -
+*/
 void NaturalUI::add_label1_ans()
 {
     clear_el(answer_lbl1); answer_lbl1=Q_NULLPTR;
@@ -178,6 +273,12 @@ void NaturalUI::add_label1_ans()
     ui->verticalLayout->addWidget(answer_lbl1);
 }
 
+
+/*
+    Create new and add label for answer2
+    @param -
+    @return -
+*/
 void NaturalUI::add_label2_ans()
 {
     clear_el(answer_lbl2); answer_lbl2=Q_NULLPTR;
@@ -186,6 +287,11 @@ void NaturalUI::add_label2_ans()
 }
 
 
+/*
+    Set UI for NSK & NSD
+    @param -
+    @return -
+*/
 void NaturalUI::set_NSK_NSD_ui()
 {
     add_1_block();
@@ -195,23 +301,41 @@ void NaturalUI::set_NSK_NSD_ui()
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_NSK_NSD()));
 }
 
+
+/*
+    Set UI for Eratosfen
+    @param -
+    @return -
+*/
 void NaturalUI::set_Eratosfen_ui()
 {
-    add_1_block();label1->setText("до якого числа крч"); spin1->setMinimum(2);
+    add_1_block();label1->setText("до якого числа"); spin1->setMinimum(2);
     add_enter();
 
 
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Eratosfen()));
 }
 
+
+/*
+    Set UI for Sundaram
+    @param -
+    @return -
+*/
 void NaturalUI::set_Sundaram_ui()
 {
-    add_1_block();label1->setText("до 2*N+1 крч");
+    add_1_block();label1->setText("до 2*N+1");
     add_enter();
 
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Syndaram()));
 }
 
+
+/*
+    Set UI for Simple factors
+    @param -
+    @return -
+*/
 void NaturalUI::set_Simple_factors_ui()
 {
      add_1_block(); spin1->setMinimum(2);
@@ -220,6 +344,12 @@ void NaturalUI::set_Simple_factors_ui()
      connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Simple_factors()));
 }
 
+
+/*
+    Set UI for Copercard
+    @param -
+    @return -
+*/
 void NaturalUI::set_Copercard_ui()
 {
     add_1_block();label1->setText("число");spin1->setMinimum(1000); spin1->setMaximum(9998);
@@ -236,7 +366,6 @@ void NaturalUI::calculate_NSK_NSD()
     add_tableWidget(); tableWidget->setHorizontalHeaderLabels(QStringList{"a","b"});
     add_label1_ans();
     add_label2_ans();
-
 
     QPair<QPair<int,int>, QVector<QPair<int,int>>> ns=algorithms->nsk_nsd(spin1->value(), spin2->value());
     int size=ns.second.size();
