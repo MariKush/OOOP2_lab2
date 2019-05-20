@@ -54,7 +54,7 @@ bool is_AProgression(vector<int> tmp){//Проверка вектора, ест�
 }
 
 bool is_GProgression(vector<int> tmp){//Проверка вектора, есть ли геометрической прогрессией
-    int a = tmp[1]/tmp[0];
+    double a = tmp[1]/tmp[0];
     for (int i = 1; i < tmp.size()-1; i++){
         if (tmp[i+1]/tmp[i] != a){
             return false;
