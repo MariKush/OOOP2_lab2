@@ -229,7 +229,7 @@ void NaturalUI::add_2_block()
 */
 void NaturalUI::add_enter()
 {
-    enter=new QPushButton("enter");
+    enter=new QPushButton("Підрахувати");
     hLayout_numbers.addWidget(enter);
 }
 
@@ -309,7 +309,7 @@ void NaturalUI::set_NSK_NSD_ui()
 */
 void NaturalUI::set_Eratosfen_ui()
 {
-    add_1_block();label1->setText("до якого числа"); spin1->setMinimum(2);
+    add_1_block();label1->setText("До якого числа"); spin1->setMinimum(2);
     add_enter();
 
 
@@ -324,7 +324,7 @@ void NaturalUI::set_Eratosfen_ui()
 */
 void NaturalUI::set_Sundaram_ui()
 {
-    add_1_block();label1->setText("до 2*N+1");
+    add_1_block();label1->setText("До 2*N+1");
     add_enter();
 
     connect(enter, SIGNAL(clicked()), this, SLOT(calculate_Syndaram()));
@@ -352,7 +352,7 @@ void NaturalUI::set_Simple_factors_ui()
 */
 void NaturalUI::set_Copercard_ui()
 {
-    add_1_block();label1->setText("число");spin1->setMinimum(1000); spin1->setMaximum(9998);
+    add_1_block();label1->setText("Число");spin1->setMinimum(1000); spin1->setMaximum(9998);
     add_enter();
 
 
@@ -431,7 +431,7 @@ void NaturalUI::calculate_Copercard()
     QString number=QString::number(spin1->value());
     if (number.size()!=4||(number[0]==number[1]&&number[1]==number[2]&&number[2]==number[3])){
         add_label_in_return_listWidget();
-        answer_lbl1->setText("однаокві цифри у числі");
+        answer_lbl1->setText("Однаокві цифри у числі");
         return;
     }
     add_listWidget_in_return_label();
