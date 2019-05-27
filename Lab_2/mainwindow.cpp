@@ -3,6 +3,8 @@
 #include "pifagorthree.h"
 #include "Progression.h"
 #include <QMessageBox>
+#include <QString>
+#include <QVector>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,4 +42,50 @@ void MainWindow::on_pushButton_2_clicked()
     } else {
         QMessageBox::about(this, "Pifagor`s threes", "Enter numbers!");
     }
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QVector<QVector<int>> input;
+    QString result;
+
+    if (ui->lineEdit_4->text() != NULL && ui->lineEdit_5->text() != NULL){
+        input = generate_pifagorthrees((ui->lineEdit_5->text()).toInt(), (ui->lineEdit_4->text()).toInt());
+    } else if (ui->lineEdit_5->text() != NULL){
+        input = generate_pifagorthrees((ui->lineEdit_5->text()).toInt());
+    } else if (ui->lineEdit_4->text() != NULL){
+        input = generate_pifagorthrees(100, (ui->lineEdit_4->text()).toInt());
+    } else {
+        input = generate_pifagorthrees();
+    }
+
+
+    for (auto i = 0; i < input.size(); i++){
+        result.push_back(QString("(%1, %2, %3) ").arg(input[i][0]).arg(input[i][1]).arg(input[i][2]));
+    }
+
+    QMessageBox::about(this, "Pifagor`s threes", result);
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QVector<QVector<int>> input;
+    QString result;
+
+    if (ui->lineEdit_4->text() != NULL && ui->lineEdit_5->text() != NULL){
+        input = generate_primitive_pifagorthrees((ui->lineEdit_5->text()).toInt(), (ui->lineEdit_4->text()).toInt());
+    } else if (ui->lineEdit_5->text() != NULL){
+        input = generate_primitive_pifagorthrees((ui->lineEdit_5->text()).toInt());
+    } else if (ui->lineEdit_4->text() != NULL){
+        input = generate_primitive_pifagorthrees(100, (ui->lineEdit_4->text()).toInt());
+    } else {
+        input = generate_primitive_pifagorthrees();
+    }
+
+
+    for (auto i = 0; i < input.size(); i++){
+        result.push_back(QString("(%1, %2, %3) ").arg(input[i][0]).arg(input[i][1]).arg(input[i][2]));
+    }
+
+    QMessageBox::about(this, "Pifagor`s threes", result);
 }

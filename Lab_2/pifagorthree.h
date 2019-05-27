@@ -10,6 +10,7 @@
 #define pifagorthree_h
 #include <vector>
 #include <math.h>
+#include <QVector>
 
 using namespace std;
 
@@ -41,13 +42,13 @@ bool is_primitive_pifagorthree(int x, int y, int z){ //Проверка, явл�
     }
 }
 
-vector<vector<int>> generate_pifagorthrees(int upper_limit = 100, int lower_limit = 1){ //Нахождение всех пифагоровых троек по диапазону (), по стандарту (1:100), можно задавать только верхнюю границу, можно обе
-    vector<vector<int>> result;
+QVector<QVector<int>> generate_pifagorthrees(int upper_limit = 100, int lower_limit = 1){ //Нахождение всех пифагоровых троек по диапазону (), по стандарту (1:100), можно задавать только верхнюю границу, можно обе
+    QVector<QVector<int>> result;
     for (int x = lower_limit; x < upper_limit; x++){
         for (int y = lower_limit; y < upper_limit; y++){
             for (int z = lower_limit; z < upper_limit; z++){
-                if (is_pifagorthree(x, y, z)){
-                    vector<int> tmp;
+                if (is_pifagorthree(x, y, z) && y>=x){
+                    QVector<int> tmp;
                     tmp.push_back(x);
                     tmp.push_back(y);
                     tmp.push_back(z);
@@ -59,15 +60,15 @@ vector<vector<int>> generate_pifagorthrees(int upper_limit = 100, int lower_limi
     return result; //Возвращает вектор с векторами из 3-х значений (x, y, z)
 }
 
-vector<vector<int>> generate_primitive_pifagorthrees(int upper_limit = 100, int lower_limit = 1){ //Нахождение всех простых пифагоровых троек по диапазону, аналогично предыдущему
-    vector<vector<int>> result;
+QVector<QVector<int>> generate_primitive_pifagorthrees(int upper_limit = 100, int lower_limit = 1){ //Нахождение всех простых пифагоровых троек по диапазону, аналогично предыдущему
+    QVector<QVector<int>> result;
     for (int m = lower_limit; m < sqrt(upper_limit); m++){
         for (int n = lower_limit; n < sqrt(upper_limit); n++){
             int x = m*m - n*n;
             int y = 2*m*n;
             int z = m*m + n*n;
             if (z <= upper_limit && x>0 && y>0 && z> 0 && NOD(x, y) == 1 && NOD(x, z) == 1 && NOD(y, z) == 1){
-                vector<int> tmp;
+                QVector<int> tmp;
                 tmp.push_back(x);
                 tmp.push_back(y);
                 tmp.push_back(z);
